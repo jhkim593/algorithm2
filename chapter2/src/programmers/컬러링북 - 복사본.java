@@ -1,62 +1,49 @@
 package programmers;
 
 import java.util.Arrays;
+
 import java.util.LinkedList;
 import java.util.Queue;
-
-public class Solution{
-
-
-	 int a;
-	 
-	 public int solution(int[] priorities, int location) {
+class Solution {
+  public int solution(int bridge_length, int weight, int[] truck_weights) {
 	        int answer = 0;
-	        int []array=new int[priorities.length];
-	        for(int i=0;i<priorities.length;i++) {
-	        	array[i]=priorities[i];
-	        }
 	        
-	       
-	        Queue<Integer>que=new LinkedList<>();
-	        for(int i=0;i<priorities.length;i++) {
-	        	que.add(priorities[i]);
-	        }
-	        while(!que.isEmpty()) {
-	        	
-	         a=que.poll();
-	        
-	        Arrays.sort(array);
-	        int max=array[array.length-1];
-	        if(a==max) {
-	        	array[array.length-1]=0;
-	        	answer++;
-	      
-	        	if(location==0) {
-	        		return answer;
-                  
-	        		
-	        	}
-	        	else {location--;}
-	        }
-	        
-	        	
-	        	
-               
+	        Queue<Integer>qu=new LinkedList<>();
 	        
 	        
-	        else {que.offer(a);location--;}
-	        
-	        if(location<0) {location=que.size()-1;}
-	       
-	        
-	        
-	        
-	       
-        	
-	        
-	        }
-	        
-	        
+	     for(int i=0; i<bridge_length-1;i++) {
+	    	qu.add(0);
+	     }
+	     int curWeight=truck_weights[0];
+	     qu.add(curWeight);
+	     int index=1;
+	      answer=1;
+	     while(!qu.isEmpty()) {
+	    	 answer++;
+	    	
+	    	 int truck=qu.poll();
+	    	 
+	    	 curWeight-=truck;
+	    	 
+	    	 if(index<truck_weights.length) {
+	    	 if(curWeight+truck_weights[index]<=weight) {
+	    		
+	    		 qu.add(truck_weights[index]);
+	    		 curWeight+=truck_weights[index];
+	    		index++;
+	    		 
+	    	 }
+	    	 else
+	    		 if(qu.size()<bridge_length) {
+	    		 if(index<truck_weights.length) {
+	    		 qu.add(0);
+	    		 }
+	    		 }
+	     }
+	     }
 	        return answer;
 	    }
-}
+       
+        
+        
+}}
