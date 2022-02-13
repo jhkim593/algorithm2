@@ -6,33 +6,64 @@ class Solution {
         for(int i=0; i<enroll.length;i++){
             index.put(enroll[i],i);
         }
-        Map<String , Integer>map=new HashMap<>();
+        // for(String str :index.keySet()){
+        //     System.out.print(str);
+        //     System.out.println(index.get(str));
+        // }
+        Map<Integer , Integer>map=new HashMap<>();
         for(int i=0; i<referral.length;i++){
             if(referral[i].equals("-")){
-                map.put(enroll[i],-1);
+                map.put(index.get(enroll[i]),-1);
             }
             else {
-                map.put(enroll[i],i);
+                map.put(index.get(enroll[i]),index.get(referral[i]));
             }
         }
+//         for(String str :map.keySet()){
+//             System.out.print(str);
+//             System.out.println(map.get(str));
+//         }
+        
+        
+        // List<int[]>list=new ArrayList<>();
         for(int i=0; i<amount.length;i++){
             int total=amount[i]*100;
-            int cur=i;
+            int cur=index.get(seller[i]);
+            int[]temp=new int[enroll.length];
             while(true){
                 int little=(int)(total*0.1);
-                if(map.get(seller[cur])==-1||little<1){
-                    answer[index.get(seller[i])]+=total;
+                if(little<1){
+                    temp[cur]=total;
                     break;
                 }
-            
+                int tempTotal=(int)(total*0.1);
+                if(map.get(cur)!=-1){
+                    temp[cur]=total-tempTotal;
+                    temp[map.get(cur)]=tempTotal;
+                    total=tempTotal;
+                    cur=map.get(cur);
+                }
+                else {
+                    temp[cur]=total-tempTotal;
+                    break;
+                }
                 
-                answer[index.get(seller[cur])]+=total*0.9;
-                answer[map.get(seller[cur])]+=total*0.1;
-                total*=0.1;
-                cur=map.get(seller[cur]);
                 
             }
+            // for(int k=0;k<temp.length;k++){
+            //     System.out.println(temp[k]);
+            // }
+           for(int k=0;k<temp.length;k++){
+               answer[k]+=temp[k];
+           }
         }
+        
+        // for(int i=0;i<list.size();i++){
+        //     for(int j=0; j<answer.length;j++){
+        //         answer[j]+=list.get(i)[j];
+        //     }
+        // }
+        
         
         return answer;
     }
