@@ -1,3 +1,6 @@
+package programmers;
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 class 표편집innerClass {
@@ -10,11 +13,11 @@ class 표편집innerClass {
     Node[] nodeArr=new Node[1000000];
     public String solution(int n, int k, String[] cmd) {
         Stack<Node> stack=new Stack<>();
-
         for(int i=0;i<n;i++){
             Node temp=new Node();
             temp.isLive=true;
             nodeArr[i]=temp;
+
         }
         for(int i=1;i<n;i++){
             nodeArr[i-1].next=nodeArr[i];
